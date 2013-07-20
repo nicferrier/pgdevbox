@@ -1,0 +1,185 @@
+<!doctype html>
+<html>
+    <head>
+        <title>PgBox - easy postgresql server get up and go</title>
+        <link rel="stylesheet" href="main.css" type="text/css"></link>
+        <link rel="stylesheet" href="node-syntax.css" type="text/css"></link>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"></link>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+    </head>
+    <body>
+        <div id="page">
+            <div id="leader">
+                <div class="container">
+                    <div class="row-fluid">
+                        <h1>Postgres Dev Box</h1>
+                        
+                        <p>A <a href="http://vagrantup.com">vagrant box</a> to help you get going with
+                        Postgresql quickly.</p>
+
+                        <ul>
+                            <li><a href="#whatyouneed">what you need to use it</a></li>
+                            <li><a href="#getgoing">get going</a></li>
+                            <li><a href="#included">what's included</a></li>
+                            <li><a href="#nodejs">how to with node.js</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="part">
+                <div class="container">
+                    <div class="row-fluid">
+                        <h2 id="whatyouneed">What you need</h2>
+                        
+                        <ul>
+                            <li><a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a></li>
+                            <li><a href="http://downloads.vagrantup.com/tags/v1.2.4">vagrant</a></li>
+                        </ul>
+                        
+                        <h3>If you use OSX</h3>
+                        <div class="usage">
+                            <p>Install <a href="http://mxcl.github.io/homebrew/">brew</a> and then:</p>
+
+                            <pre>
+brew install virtualbox
+                            </pre>
+
+                            <p>then <a href="http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/Vagrant-1.2.4.dmg">install this</a></p>
+                        </div>
+                        <h3>If you use Ubuntu</h3>
+                        <div class="usage">
+                            <p>Do this:</p>
+                            
+                            <pre>
+sudo apt-get install virtualbox
+curl -L http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/vagrant_1.2.4_i686.deb -o ~/vagrant_1.2.4_i686.deb 
+sudo dpkg -i ~/vagrant_1.2.4_i686.deb 
+                            </pre>
+
+                            <em>Note this is for the 32 bit version of vagrant, see
+                            the <a href="http://downloads.vagrantup.com/tags/v1.2.4">vagrant site</a> for
+                            information on how to install the 64 bit version</em>
+                        </div>
+                        
+                        <h3>If you use Windows</h3>
+                        <div class="usage">
+                            <p>Firstly, consider switching. Windows really is a useless developers
+                            operating system. But, if you really can't swap then:</p>
+
+                            <ul>
+                                <li>install <a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a></li>
+                                <li>download <a href="http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/Vagrant_1.2.4.msi">and run this</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="getgoingpart" class="part">
+                <div class="container">
+                    <div class="row-fluid">
+                        <h2 id="getgoing">Get going quickly</h2>
+                        
+                        <p>Here's how to get going.</p>
+
+                        <pre>
+mkdir mypg-project
+cd mypg-project
+curl http://postgresbox.com/Vagrantfile -o Vagrantfile
+vagrant up
+                        </pre>
+
+                        <p>Now you have a running PostgreSQL server.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="included-part" class="part">
+                <div class="container">
+                    <div class="row-fluid">
+                        <h2 id="included">What does the server have?</h2>
+                        
+                        <p>The pgbox postgres has a single PostgreSQL 9.3 server with:</p>
+                        
+                        <ul>
+                            <li>a superuser called <em>vagrant</em></li>
+                            <li>a database called <em>vagrant</em> owned by the user <em>vagrant</em></li>
+                            <li>a single <a href="http://www.postgresql.org/docs/9.3/static/datatype-json.html">JSON column table</a> in the <em>vagrant</em> database called <em>a</em></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="nodejspart" class="part">
+                <div class="container">
+                    <div class="row-fluid">
+                        <h2 id="nodejs">How do I use it with node.js?</h2>
+
+                        <ul>
+                            <li>install <a href="http://nodejs.org/">node.js</a></li>
+                            <li>npm install <a href="https://github.com/brianc/node-postgres/wiki/Client#method-query-simple">pg</a></li>
+                        </ul>
+
+                        <p>Create another table in the database:</p>
+
+                        <pre class="js">
+<span class="keyword">var</span> <span class="variable-name">pg</span> = require(<span class="string">'pg'</span>);
+<span class="keyword">var</span> <span class="variable-name">client</span> = <span class="keyword">new</span> pg.Client(<span class="string">"tcp://vagrant@localhost/vagrant"</span>);
+client.connect(
+    <span class="keyword">function</span> (<span class="js2-function-param">err</span>) { 
+        <span class="keyword">if</span> (!err) {
+            <span class="keyword">return</span> client.query (
+                <span class="string">"create table b (id integer, txt text);"</span>, 
+                <span class="keyword">function</span> (<span class="js2-function-param">err</span>, <span class="js2-function-param">res</span>) { 
+                    <span class="keyword">if</span> (! err) { 
+                        console.log(<span class="string">"result:"</span> , res);
+                        client.end();
+                        <span class="keyword">return</span> <span class="string">"created"</span>;
+                    }
+                }
+            );
+        }
+    }
+);
+                        </pre>
+                        
+                        <p>Or select something from the existing table:</p>
+
+                        <pre class="js">
+<span class="keyword">var</span> <span class="variable-name">pg</span> = require(<span class="string">'pg'</span>); 
+<span class="keyword">var</span> <span class="variable-name">client</span> = <span class="keyword">new</span> pg.Client(<span class="string">"tcp://vagrant@localhost/vagrant"</span>); 
+client.connect(
+    <span class="keyword">function</span> (<span class="js2-function-param">err</span>) { 
+        <span class="keyword">if</span> (err) { 
+            <span class="keyword">return</span> console.error(<span class="string">"bah!"</span>); 
+        } 
+        <span class="keyword">else</span> { 
+            <span class="keyword">return</span> client.query(
+                <span class="string">"select * from a where a -&gt;&gt; 'a' = '10'"</span>, 
+                <span class="keyword">function</span> (<span class="js2-function-param">err</span>, <span class="js2-function-param">res</span>) { 
+                    <span class="keyword">if</span> (err) { 
+                        <span class="keyword">return</span> console.log(<span class="string">"whoops!"</span>); 
+                    } 
+                    <span class="keyword">else</span> { 
+                        <span class="keyword">var</span> <span class="variable-name">row</span> = res.rows[0]; 
+                        client.end(); 
+                        <span class="keyword">return</span> console.log(<span class="string">"result! "</span>, row[<span class="string">"a"</span>].a); 
+                    } 
+                } 
+            ); 
+        } 
+    } 
+); 
+                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <ul>
+                        <li>(C) 2013 N.J.Ferrier</li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

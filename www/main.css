@@ -1,0 +1,64 @@
+body {
+    font-family: sans-serif;
+}
+
+div.usage {
+/*    display: none;*/
+}
+
+div.row-fluid {
+    font-size: 16pt;
+    line-height: 130%;
+    padding-top: 40px;
+}
+
+div.row-fluid ul li {
+    line-height: 130%;
+}
+
+div#leader {
+    padding-top: 30px;
+    padding-bottom: 150px;
+    background-color: #2B0052;
+    color: Ivory;
+}
+
+div#leader a:link {
+    color: Gainsboro;
+}
+
+div#leader a:visited {
+    color: SkyBlue;
+}
+
+
+div#getgoingpart, div#nodejspart {
+    background-color: #2B0052;
+    color: Ivory;
+}
+
+div.part {
+    padding-bottom: 150px;
+    border-top: thin solid Indigo;
+    min-height: 700px;
+/*    background: url('logo.png') bottom right no-repeat;*/
+    margin-bottom: 0 !important;
+}
+
+pre {
+    padding: 20px !important;
+    margin: 20px !important;
+    background-color: Black !important;
+    color: Ivory !important;
+}
+
+footer {
+    margin-top: 0 !important;
+    padding-top: 10px;
+    background-color: Gainsboro;
+    color: #000066;
+}
+
+footer ul li {
+    list-style-type: none;
+}

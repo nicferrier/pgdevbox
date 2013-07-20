@@ -1,0 +1,24 @@
+pre.js {
+  background: Black;
+  color: Ivory;
+}
+
+.js2-function-param {
+  /* js2-function-param */
+  color: #2e8b57;
+}
+
+.keyword {
+  /* font-lock-keyword-face */
+  color: #00ffff;
+}
+
+.string {
+  /* font-lock-string-face */
+  color: #ffa07a;
+}
+
+.variable-name {
+  /* font-lock-variable-name-face */
+  color: #eedd82;
+}
