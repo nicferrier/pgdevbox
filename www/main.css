@@ -45,6 +45,10 @@ div.part {
     margin-bottom: 0 !important;
 }
 
+div.row-fluid h2 {
+    border-bottom: thin solid;
+}
+
 pre {
     padding: 20px !important;
     margin: 20px !important;
