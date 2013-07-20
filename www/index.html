@@ -89,6 +89,15 @@ vagrant up
                         </pre>
 
                         <p>Now you have a running PostgreSQL server.</p>
+
+                        <p>It's easy to to play with it using the built in psql shell inside the vagrant machine:</p>
+
+                        <pre>
+vagrant ssh -- -t psql
+\d a
+                        </pre>
+
+                        <p>will show a list of the tables installed. <code>/quit</code> will quite the psql shell.</p>
                     </div>
                 </div>
             </div>
