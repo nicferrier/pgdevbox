@@ -1,0 +1,18 @@
+#!/bin/bash
+set -x
+echo "deb http://apt.postgresql.org/pub/repos/apt/ squeeze-pgdg main 9.3" \
+    | sudo tee -a /etc/apt/sources.list.d/pgdg.list
+wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+sudo apt-get update
+sudo apt-get -y install postgresql-9.3
+sudo apt-get -y install postgresql-contrib-9.3
+sudo su -c 'createuser -s vagrant' postgres
+sudo sed -ibk \
+    -re "s/[#]*listen_addresses = '.*'(.*)/listen_addresses = '*'\1/" \
+    /etc/postgresql/9.3/main/postgresql.conf
+echo "host    all   vagrant   10.0.2.2/32  trust" | sudo tee -a /etc/postgresql/9.3/main/pg_hba.conf
+sudo service postgresql restart
+su -c 'createdb vagrant' vagrant
+su -c "psql -c 'create table a (a json);'" vagrant
+
+# end
