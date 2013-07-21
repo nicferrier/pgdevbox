@@ -16,6 +16,10 @@ div.row-fluid ul li {
     line-height: 130%;
 }
 
+#video iframe {
+    float: right;
+}
+
 div#leader {
     padding-top: 30px;
     padding-bottom: 150px;
@@ -31,6 +35,13 @@ div#leader a:visited {
     color: SkyBlue;
 }
 
+h4.payment {
+    padding-top: 20px;
+}
+
+.payment {
+    width: 50%;
+}
 
 div#getgoingpart, div#nodejspart {
     background-color: #2B0052;
