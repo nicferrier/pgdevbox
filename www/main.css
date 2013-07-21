@@ -66,6 +66,10 @@ div.row-fluid h2 {
     border-bottom: thin solid;
 }
 
+ul.nav-tabs {
+    margin-top: 40px;
+}
+
 pre {
     padding: 20px !important;
     margin: 20px !important;
