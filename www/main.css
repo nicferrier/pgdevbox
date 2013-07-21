@@ -73,6 +73,11 @@ pre {
     color: Ivory !important;
 }
 
+code {
+    margin: 5px;
+    font-size: 16pt !important;
+}
+
 footer {
     margin-top: 0 !important;
     padding-top: 10px;

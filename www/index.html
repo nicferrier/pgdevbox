@@ -146,7 +146,7 @@ vagrant ssh -- -t psql
 \d a
                         </pre>
 
-                        <p>will show a list of the tables installed. <code>/quit</code> will quite the psql shell.</p>
+                        <p>will show a list of the tables installed. <code>\quit</code> will quite the psql shell.</p>
                     </div>
                 </div>
             </div>
@@ -176,32 +176,45 @@ vagrant ssh -- -t psql
                             <li>npm install <a href="https://github.com/brianc/node-postgres/wiki/Client#method-query-simple">pg</a></li>
                         </ul>
 
-                        <p>Create another table in the database:</p>
+                        <ul class="nav nav-tabs" id="use-tabs">
+                            <li class="active"><a href="#nodejs-insertdata" data-toggle="tab">insert some data</a></li>
+                            <li><a href="#nodejs-getdata" data-toggle="tab">get some data</a></li>
+                            <li><a href="#nodejs-createtable" data-toggle="tab">create a table</a></li>
+                        </ul>
 
-                        <pre class="js">
-<span class="keyword">var</span> <span class="variable-name">pg</span> = require(<span class="string">'pg'</span>);
-<span class="keyword">var</span> <span class="variable-name">client</span> = <span class="keyword">new</span> pg.Client(<span class="string">"tcp://vagrant@localhost/vagrant"</span>);
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="nodejs-insertdata">
+                                <p>Use SQL <code>INSERT</code> to put some JSON in the table:</p>
+                                <pre>
+<span class="keyword">var</span> <span class="variable-name">data</span> = { <span class="variable-name">"a"</span>: <span class="string">"10"</span>, <span class="variable-name">"b"</span>: <span class="string">"20"</span> };
+<span class="keyword">var</span> <span class="variable-name">pg</span> = require(<span class="string">'pg'</span>); 
+<span class="keyword">var</span> <span class="variable-name">client</span> = <span class="keyword">new</span> pg.Client(<span class="string">"tcp://vagrant@localhost/vagrant"</span>); 
 client.connect(
     <span class="keyword">function</span> (<span class="js2-function-param">err</span>) { 
-        <span class="keyword">if</span> (!err) {
-            <span class="keyword">return</span> client.query (
-                <span class="string">"create table b (id integer, txt text);"</span>, 
+        <span class="keyword">if</span> (err) { 
+            <span class="keyword">return</span> console.error(<span class="string">"bah!"</span>); 
+        } 
+        <span class="keyword">else</span> { 
+            <span class="keyword">return</span> client.query(
+                <span class="string">"insert into a (a) values ('"</span> + JSON.stringify(data) + <span class="string">"'::</span><span class="string"><span class="flyspell-incorrect">json</span></span><span class="string">)"</span>, 
                 <span class="keyword">function</span> (<span class="js2-function-param">err</span>, <span class="js2-function-param">res</span>) { 
-                    <span class="keyword">if</span> (! err) { 
-                        console.log(<span class="string">"result:"</span> , res);
-                        client.end();
-                        <span class="keyword">return</span> <span class="string">"created"</span>;
-                    }
-                }
-            );
-        }
-    }
-);
-                        </pre>
-                        
-                        <p>Or select something from the existing table:</p>
-
-                        <pre class="js">
+                    <span class="keyword">if</span> (err) { 
+                        <span class="keyword">return</span> console.error(<span class="string">"whoops!"</span>); 
+                    } 
+                    <span class="keyword">else</span> { 
+                        client.end(); 
+                        <span class="keyword">return</span> res;
+                    } 
+                } 
+            ); 
+        } 
+    } 
+); 
+                                </pre>
+                            </div>
+                            <div class="tab-pane" id="nodejs-getdata">
+                                <p>Or SQL <code>SELECT</code> something from the existing table:</p>
+                                <pre class="js">
 <span class="keyword">var</span> <span class="variable-name">pg</span> = require(<span class="string">'pg'</span>); 
 <span class="keyword">var</span> <span class="variable-name">client</span> = <span class="keyword">new</span> pg.Client(<span class="string">"tcp://vagrant@localhost/vagrant"</span>); 
 client.connect(
@@ -226,7 +239,33 @@ client.connect(
         } 
     } 
 ); 
-                        </pre>
+                                </pre>
+                            </div>
+                            <div class="tab-pane" id="nodejs-createtable">
+                                <p>Create another table in the database:</p>
+                                
+                                <pre class="js">
+<span class="keyword">var</span> <span class="variable-name">pg</span> = require(<span class="string">'pg'</span>);
+<span class="keyword">var</span> <span class="variable-name">client</span> = <span class="keyword">new</span> pg.Client(<span class="string">"tcp://vagrant@localhost/vagrant"</span>);
+client.connect(
+    <span class="keyword">function</span> (<span class="js2-function-param">err</span>) { 
+        <span class="keyword">if</span> (!err) {
+            <span class="keyword">return</span> client.query (
+                <span class="string">"create table b (id integer, txt text);"</span>, 
+                <span class="keyword">function</span> (<span class="js2-function-param">err</span>, <span class="js2-function-param">res</span>) { 
+                    <span class="keyword">if</span> (! err) { 
+                        console.log(<span class="string">"result:"</span> , res);
+                        client.end();
+                        <span class="keyword">return</span> <span class="string">"created"</span>;
+                    }
+                }
+            );
+        }
+    }
+);
+                                </pre>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
