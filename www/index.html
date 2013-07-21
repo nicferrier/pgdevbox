@@ -6,6 +6,8 @@
         <link rel="stylesheet" href="node-syntax.css" type="text/css"></link>
         <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css"></link>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"></meta>
+        <script src="jquery-1.10.2.min.js" language="javascript"></script>
+        <script src="bootstrap/js/bootstrap.js" language="javascript"></script>
         <script>
 //<!--
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -18,7 +20,19 @@
 //-->
         </script>
     </head>
-    <body>
+    <body data-spy="scroll" data-target=".navbar">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a class="brand" href="#">pgdevbox</a>
+                <ul class="nav">
+                    <li class="active"><a href="#pgdevbox">Home</a></li>
+                    <li><a href="#whatyouneed">Depends</a></li>
+                    <li><a href="#getgoing">Get started</a></li>
+                    <li><a href="#included">What's in it</a></li>
+                    <li><a href="#nodejs">How to use it</a></li>
+                </ul>
+            </div>
+        </div>
         <div id="page">
             <div id="leader">
                 <div class="container">
@@ -26,7 +40,7 @@
                         <span id="video">
                             <iframe width="480" height="360" src="//www.youtube.com/embed/uXfUq8wZb28?rel=0" frameborder="0" allowfullscreen></iframe>
                         </span>
-                        <h1>Postgres Dev Box</h1>
+                        <h1 id="pgdexbox">Postgres Dev Box</h1>
                         
                         <p>A <a href="http://vagrantup.com">vagrant box</a> to help you get going with
                         Postgresql quickly.</p>
@@ -52,46 +66,59 @@
                 <div class="container">
                     <div class="row-fluid">
                         <h2 id="whatyouneed">What you need</h2>
-                        
                         <ul>
                             <li><a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a></li>
                             <li><a href="http://downloads.vagrantup.com/tags/v1.2.4">vagrant</a></li>
                         </ul>
-                        
-                        <h3>If you use OSX</h3>
-                        <div class="usage">
-                            <p>Install <a href="http://mxcl.github.io/homebrew/">brew</a> and then:</p>
-
-                            <pre>
+                        <ul class="nav nav-tabs" id="use-tabs">
+                            <li class="active">
+                                <a href="#use-osx" data-toggle="tab">Using OSX</a>
+                            </li>
+                            <li><a href="#use-ubuntu" data-toggle="tab">Using Ubuntu</a></li>
+                            <li><a href="#use-windows" data-toggle="tab">Using Windows</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="use-osx">
+                                <h3>If you use OSX</h3>
+                                <div class="usage">
+                                    <p>Install <a href="http://mxcl.github.io/homebrew/">brew</a> and then:</p>
+                                    
+                                    <pre>
 brew install virtualbox
-                            </pre>
+                                    </pre>
 
-                            <p>then <a href="http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/Vagrant-1.2.4.dmg">install this</a></p>
-                        </div>
-                        <h3>If you use Ubuntu</h3>
-                        <div class="usage">
-                            <p>Do this:</p>
-                            
-                            <pre>
+                                    <p>then <a href="http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/Vagrant-1.2.4.dmg">install this</a></p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="use-ubuntu">
+                                <h3>If you use Ubuntu</h3>
+                                <div class="usage">
+                                    <p>Do this:</p>
+                                    
+                                    <pre>
 sudo apt-get install virtualbox
 curl -L http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/vagrant_1.2.4_i686.deb -o ~/vagrant_1.2.4_i686.deb 
 sudo dpkg -i ~/vagrant_1.2.4_i686.deb 
-                            </pre>
-
-                            <em>Note this is for the 32 bit version of vagrant, see
-                            the <a href="http://downloads.vagrantup.com/tags/v1.2.4">vagrant site</a> for
-                            information on how to install the 64 bit version</em>
-                        </div>
-                        
-                        <h3>If you use Windows</h3>
-                        <div class="usage">
-                            <p>Firstly, consider switching. Windows really is a useless developers
-                            operating system. But, if you really can't swap then:</p>
-
-                            <ul>
-                                <li>install <a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a></li>
-                                <li>download <a href="http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/Vagrant_1.2.4.msi">and run this</a></li>
-                            </ul>
+                                    </pre>
+                                    
+                                    <em>Note this is for the 32 bit version of vagrant, see
+                                    the <a href="http://downloads.vagrantup.com/tags/v1.2.4">vagrant site</a> for
+                                    information on how to install the 64 bit version</em>
+                                </div>
+                            </div>
+                            
+                            <div class="tab-pane" id="use-windows">
+                                <h3>If you use Windows</h3>
+                                <div class="usage">
+                                    <p>Firstly, consider switching. Windows really is a useless developers
+                                    operating system. But, if you really can't swap then:</p>
+                                    
+                                    <ul>
+                                        <li>install <a href="https://www.virtualbox.org/wiki/Downloads">virtualbox</a></li>
+                                        <li>download <a href="http://files.vagrantup.com/packages/0219bb87725aac28a97c0e924c310cc97831fd9d/Vagrant_1.2.4.msi">and run this</a></li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -214,4 +241,5 @@ client.connect(
             </div>
         </footer>
     </body>
-</html>
+ </html>
+                                        

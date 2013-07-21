@@ -2,6 +2,12 @@ body {
     font-family: sans-serif;
 }
 
+div.navbar {
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
 div.usage {
 /*    display: none;*/
 }
