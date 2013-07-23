@@ -140,14 +140,38 @@ vagrant up
 
                         <p>Now you have a running PostgreSQL server.</p>
 
-                        <p>It's easy to to play with it using the built in psql shell inside the vagrant machine:</p>
+                        <p>It's easy to to play with it using the built in psql shell inside the vagrant machine; from your shell:</p>
 
                         <pre>
-vagrant ssh -- -t psql
-\d a
+$ vagrant ssh -- -t psql
+psql (9.3beta2)
+Type "help" for help.
+
+vagrant= <span class="keyword">\d</span>
+
+        List of relations
+ Schema | Name | Type  |  Owner  
+--------+------+-------+---------
+ public | a    | table | vagrant
+(1 row)
                         </pre>
 
-                        <p>will show a list of the tables installed. <code>\quit</code> will quite the psql shell.</p>
+                        <p>will show a list of the tables installed, or show the structure of this table:</p>
+
+                        <pre>
+vargrant= <span class="keyword">\d</span> <span class="string">a</span>
+
+     Table "public.a"
+ Column | Type | Modifiers 
+--------+------+-----------
+ a      | json | 
+
+                        </pre>
+
+                        <p>
+                            finally <code>\quit</code> will quit the psql shell. 
+                            More about <a href="http://www.postgresql.org/docs/devel/static/app-psql.html">psql here.</a>
+                        </p>
                     </div>
                 </div>
             </div>
